@@ -1,0 +1,7 @@
+:root {
+    /* alerts */
+    --ok-color: #4d974d;
+    --ok-light-color: #2f7c2f;
+    --wrong-color: #9e3a3a;
+    --wrong-light-color: #8b1c1c;
+}
