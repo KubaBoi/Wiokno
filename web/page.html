@@ -7,6 +7,7 @@
     <title>Wiokno</title>
 
     <link rel="stylesheet" href="/styles/colors.css">
+    <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="https://kubaboi.github.io/CheeseFramework/mdConverter/style.css">
     <link rel="stylesheet" href="https://kubaboi.github.io/CheeseFramework/public/styles/alertStyle.css"> 
 </head>
@@ -15,7 +16,11 @@
     <h1>Wiokno</h1>
     <div id="historyDiv"></div>
 
-    <div id="editDiv"></div>
+    <div id="editDiv">
+        <button>Make new directory</button>
+        <button onclick="makeFile()">Make new file</button>
+        <button onclick="sourceEdit()">Edit</button>
+    </div>
 
     <div id="navigationDiv" class="contents">
         <p id="contP"></p>
@@ -37,19 +42,20 @@
 
     <script src="/scripts/variables.js"></script>
     <script src="/scripts/contentsScript.js"></script>
-    <script src="/scripts/makeDirScript.js"></script>
+    <script src="/scripts/makeScript.js"></script>
+    <script src="/scripts/editScript.js"></script>
 
     <script>
         let url = new URL(window.location.href);
         let fileName = url.searchParams.get("f");
-        if (fileName == null) fileName = "hello";
+        if (fileName == null) fileName = "dirConf";
 
         var dirPath = url.searchParams.get("d");
         if (dirPath == null) dirPath = "/";
 
         getMd(`/files/${dirPath}/${fileName}.md`, false);
 
-        getContents(dirPath);
+        getContents();
     </script>
 
 </body>

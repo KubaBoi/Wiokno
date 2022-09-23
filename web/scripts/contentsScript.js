@@ -1,5 +1,5 @@
 
-async function getContents(dirPath) {
+async function getContents() {
     let response = await callEndpoint("GET", `/search/dir?path=${dirPath}`);
     if (response.ERROR == null) {
 
