@@ -39,7 +39,7 @@ class SearchController(cc):
         for i, ch in enumerate(str):
             if (ch == "/" or ch == "\\"):
                 if (add):
-                    pth += ch
+                    pth += "/"
                     add = False
             else:
                 pth += ch

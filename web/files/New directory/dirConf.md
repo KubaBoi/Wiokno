@@ -1,5 +1,0 @@
-
-# New directory
-
-ghaga
-            

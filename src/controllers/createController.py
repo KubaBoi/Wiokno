@@ -42,7 +42,9 @@ class CreateController(cc):
         args = cc.readArgs(server)
         cc.checkJson(["DIR"], args)
 
-        directory = ResMan.web("files", args["DIR"])
+        dir = SearchController.removeDuplicates(args["DIR"])
+
+        directory = ResMan.web("files", dir)
 
         file_name = "New file"
         i = 0
@@ -63,7 +65,7 @@ class CreateController(cc):
         args = cc.readArgs(server)
         cc.checkJson(["FILE", "CONTENT"], args)
 
-        file = args["FILE"]
+        file = SearchController.removeDuplicates(args["FILE"])
         content = args["CONTENT"]
 
         file_name = ResMan.getFileName(file)
@@ -89,7 +91,8 @@ class CreateController(cc):
             f.write(args["CONTENT"])
 
         return cc.createResponse({
-            "DIR": ResMan.getRelativePathFrom(os.path.dirname(new_file), ResMan.web("files")),
+            "DIR": SearchController.removeDuplicates(
+                ResMan.getRelativePathFrom(os.path.dirname(new_file), ResMan.web("files"))),
             "FILE_NAME": ResMan.getFileName(new_file)
         })
 
@@ -118,6 +121,7 @@ class CreateController(cc):
         os.rename(dir, new_dir)
 
         return cc.createResponse({
-            "DIR": ResMan.getRelativePathFrom(new_dir, ResMan.web("files")),
+            "DIR": SearchController.removeDuplicates(
+                ResMan.getRelativePathFrom(new_dir, ResMan.web("files"))),
             "FILE_NAME": ResMan.getFileName(file)
         })
