@@ -17,7 +17,7 @@
     <div id="historyDiv"></div>
 
     <div id="editDiv">
-        <button>Make new directory</button>
+        <button onclick="makeDir()">Make new directory</button>
         <button onclick="makeFile()">Make new file</button>
         <button onclick="sourceEdit()">Edit</button>
     </div>
@@ -47,6 +47,7 @@
 
     <script>
         let url = new URL(window.location.href);
+
         let fileName = url.searchParams.get("f");
         if (fileName == null) fileName = "dirConf";
 

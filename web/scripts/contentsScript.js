@@ -6,14 +6,15 @@ async function getContents() {
         let dirs = response.DIRS;
         let files = response.FILES;
 
+        dirPath = dirPath.replaceAll("\\", "/");
         document.getElementById("contP").innerHTML = dirPath;
 
         let contUl = document.getElementById("contUl");
         clearTable(contUl);
 
         // PARENT DIRECTORY
-        let parentPath = dirPath.split("/")
-        parentPath.pop()
+        let parentPath = dirPath.split("/");
+        parentPath.pop();
         parentPath = parentPath.join("/");
         if (parentPath == "") parentPath = "/";
         createElement("li", contUl, `<label>> <a href="/page.html?d=${parentPath}">..</a></label>`);
@@ -21,7 +22,7 @@ async function getContents() {
         // SLAVE DIRECTORIES
         for (let i = 0; i < dirs.length; i++) {
             let dir = dirs[i];
-            createElement("li", contUl, `<label>> <a href="/page.html?d=${dirPath}${dir}">${dir}</a></label>`);
+            createElement("li", contUl, `<label>> <a href="/page.html?d=${dirPath}/${dir}">${dir}</a></label>`);
         }
 
         // FILES

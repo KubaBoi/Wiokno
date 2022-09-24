@@ -5,6 +5,8 @@ from Cheese.cheeseController import CheeseController as cc
 from Cheese.resourceManager import ResMan
 from Cheese.httpClientErrors import *
 
+from src.controllers.searchController import SearchController
+
 #@controller /create;
 class CreateController(cc):
 
@@ -14,7 +16,25 @@ class CreateController(cc):
         args = cc.getArgs(path)
         cc.checkJson(["path"], args)
 
-        return cc.createResponse({"STATUS": "OK"})
+        pth = SearchController.removeDuplicates(args["path"])
+
+        directory = ResMan.web("files", pth)
+
+        dir_name = "New directory"
+        i = 0
+        while (os.path.exists(ResMan.joinPath(directory, dir_name))):
+            i += 1
+            dir_name = f"New directory ({i})"
+        
+        path = ResMan.joinPath(directory, dir_name)
+        os.makedirs(path)
+
+        with open(os.path.join(path, "dirConf.md"), "w") as f:
+            f.write(f"""
+# {dir_name}
+            """)
+
+        return cc.createResponse({"DIR": path})
 
     #@post /file;
     @staticmethod
@@ -24,11 +44,11 @@ class CreateController(cc):
 
         directory = ResMan.web("files", args["DIR"])
 
-        file_name = "New note"
+        file_name = "New file"
         i = 0
         while (os.path.exists(ResMan.joinPath(directory, file_name + ".md"))):
             i += 1
-            file_name = f"New note ({i})"
+            file_name = f"New file ({i})"
         
         path = ResMan.joinPath(directory, file_name + ".md")
 
@@ -46,17 +66,58 @@ class CreateController(cc):
         file = args["FILE"]
         content = args["CONTENT"]
 
+        file_name = ResMan.getFileName(file)
+        if (file_name == "dirConf.md"):
+            return CreateController.updateDirConf(file, content)
+
         lines = content.split("\n")
         file_name = "noname.md"
         for line in lines:
             if (line.startswith("# ")):
-                file_name = line.replace("# ", "")
+                file_name = line.replace("# ", "").strip() + ".md"
                 break
 
-        os.remove(ResMan.web(file))
-        file = file.replace(ResMan.getFileName(file), file_name + ".md") 
+        new_file = ResMan.web(file.replace(ResMan.getFileName(file), file_name))
 
-        with open(ResMan.web(file), "w") as f:
+        if (file_name != ResMan.getFileName(file)):
+            if (os.path.exists(new_file)):
+                raise Conflict("This file already exists")
+
+        os.remove(ResMan.web(file))
+
+        with open(new_file, "w") as f:
             f.write(args["CONTENT"])
 
-        return cc.createResponse({"FILE_NAME": file})
+        return cc.createResponse({
+            "DIR": ResMan.getRelativePathFrom(os.path.dirname(new_file), ResMan.web("files")),
+            "FILE_NAME": ResMan.getFileName(new_file)
+        })
+
+    # METHODS
+
+    @staticmethod
+    def updateDirConf(file, content):
+        dir = os.path.dirname(ResMan.web(file))
+
+        lines = content.split("\n")
+        dir_name = "noname"
+        for line in lines:
+            if (line.startswith("# ")):
+                dir_name = line.replace("# ", "").strip()
+                break
+
+        new_dir = os.path.join(os.path.dirname(dir), dir_name)
+
+        if (new_dir != dir):
+            if (os.path.exists(new_dir)):
+                raise Conflict("This directory already exists")
+
+        with open(ResMan.web(file), "w") as f:
+            f.write(content)
+
+        os.rename(dir, new_dir)
+
+        return cc.createResponse({
+            "DIR": ResMan.getRelativePathFrom(new_dir, ResMan.web("files")),
+            "FILE_NAME": ResMan.getFileName(file)
+        })

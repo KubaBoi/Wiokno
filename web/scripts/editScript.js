@@ -41,12 +41,13 @@ async function save() {
     
     let response = await callEndpoint("POST", "/create/update", request);
     if (response.ERROR != null) {
-        showWrongAlert("ERROR", response.ERROR, alertTime);
+        showErrorAlert(response.ERROR, alertTime);
     }
-    else {
-        mdUrl = response.FILE_NAME;
-        console.log(mdUrl);
-        getMd(mdUrl, false);
+    else {        
+        dirPath = response.DIR;
+        fileName = response.FILE_NAME;
+
+        getMd(`/files/${dirPath}/${fileName}`, false);
         getContents(dirPath);
     }
 }

@@ -1,18 +1,24 @@
 
 async function makeDir() {
-
+    let response = await callEndpoint("GET", `/create/dir?path=${dirPath}`);
+    if (response.ERROR == null) {
+        getContents();
+    }
+    else {
+        showErrorAlert(response.ERROR, alertTime);
+    }
 }
 
 async function makeFile() {
-    var request = {
+    let request = {
         "DIR": dirPath
     }
 
-    var response = await callEndpoint("POST", "/create/file", request);
-    if (response.ERROR != null) {
-        showWrongAlert("ERROR", response.ERROR, alertTime);
+    let response = await callEndpoint("POST", "/create/file", request);
+    if (response.ERROR == null) {
+        location.reload();
     }
     else {
-        location.reload();
+        showErrorAlert(response.ERROR, alertTime);
     }
 }
