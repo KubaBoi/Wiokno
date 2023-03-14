@@ -114,7 +114,7 @@ class CreateController(cc):
         else:
             new_dir = dir
 
-        if (new_dir != dir):
+        if (ResMan.getFileName(new_dir) != ResMan.getFileName(dir)):
             if (os.path.exists(new_dir)):
                 raise Conflict("This directory already exists")
 
