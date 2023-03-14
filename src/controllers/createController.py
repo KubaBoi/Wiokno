@@ -109,7 +109,10 @@ class CreateController(cc):
                 dir_name = line.replace("# ", "").strip()
                 break
 
-        new_dir = os.path.join(os.path.dirname(dir), dir_name)
+        if (file != "/files/dirConf.md"):
+            new_dir = os.path.join(os.path.dirname(dir), dir_name)
+        else:
+            new_dir = dir
 
         if (new_dir != dir):
             if (os.path.exists(new_dir)):
