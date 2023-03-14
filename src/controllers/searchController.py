@@ -28,7 +28,7 @@ class SearchController(cc):
 
             break
         
-        return cc.createResponse({"DIRS": ret_dirs, "FILES": ret_files})
+        return cc.createResponse({"DIRS": sorted(ret_dirs), "FILES": sorted(ret_files)})
 
     # METHODS
 
