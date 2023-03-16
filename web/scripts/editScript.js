@@ -49,6 +49,11 @@ async function save() {
 
         getMd(`/files/${dirPath}/${fileName}`, false);
         getContents(dirPath);
+        let resp= await callEndpoint("GET", mdUrl);
+        if (resp.ERROR == null) 
+            sourceDiv.value = resp;
+        else
+            alert("Error, do not save!! Close edit and open it again.");
     }
 }
 
