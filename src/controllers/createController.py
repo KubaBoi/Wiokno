@@ -1,5 +1,6 @@
 
 import os
+import shutil
 
 from Cheese.cheeseController import CheeseController as cc
 from Cheese.resourceManager import ResMan
@@ -87,13 +88,20 @@ class CreateController(cc):
 
         os.remove(ResMan.web(file))
 
+        if (file_name == "xxxxx.md"):
+            return cc.createResponse({
+                "DIR": SearchController.removeDuplicates(
+                    ResMan.getRelativePathFrom(os.path.dirname(new_file), ResMan.web("files"))),
+                "FILE_NAME": "dirConf.md"
+            })
+
         with open(new_file, "w") as f:
             f.write(args["CONTENT"])
 
         return cc.createResponse({
             "DIR": SearchController.removeDuplicates(
                 ResMan.getRelativePathFrom(os.path.dirname(new_file), ResMan.web("files"))),
-            "FILE_NAME": ResMan.getFileName(new_file)
+            "FILE_NAME": file_name
         })
 
     # METHODS
@@ -114,17 +122,20 @@ class CreateController(cc):
         else:
             new_dir = dir
 
-        if (ResMan.getFileName(new_dir) != ResMan.getFileName(dir)):
-            if (os.path.exists(new_dir)):
-                raise Conflict("This directory already exists")
+        if (ResMan.getFileName(new_dir) != ResMan.getFileName(dir) and os.path.exists(new_dir)):
+            raise Conflict("This directory already exists")
 
         with open(ResMan.web(file), "w") as f:
             f.write(content)
 
         os.rename(dir, new_dir)
 
+        if (file != "/files/dirConf.md" and dir_name == "xxxxx"):
+            shutil.rmtree(new_dir)
+            new_dir = os.path.dirname(new_dir)
+
         return cc.createResponse({
             "DIR": SearchController.removeDuplicates(
                 ResMan.getRelativePathFrom(new_dir, ResMan.web("files"))),
-            "FILE_NAME": ResMan.getFileName(file)
+            "FILE_NAME": "dirConf.md"
         })
