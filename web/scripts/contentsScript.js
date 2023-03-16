@@ -12,6 +12,9 @@ async function getContents() {
         let contUl = document.getElementById("contUl");
         clearTable(contUl);
 
+        // SELF
+        createElement("li", contUl, `<label>> <a href="/page.html?d=${dirPath}">.</a></label>`);
+
         // PARENT DIRECTORY
         let parentPath = dirPath.split("/");
         parentPath.pop();
