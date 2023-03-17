@@ -15,7 +15,7 @@ async function sourceEdit() {
                 {"name": "id", "value": "sourceInput"},
                 {"name": "class", "value": "sourceInput"},
                 {"name": "columns", "value": "500"},
-                {"name": "rows", "value": "500"}
+                {"name": "rows", "value": "50"}
             ]);
             sourceInput.focus();
             sourceInput.addEventListener('keydown', e => {

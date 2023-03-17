@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="headLine">
+    <div id="headLine" class="headLine">
         <div class="mainHeader">
             <img src="/images/icon.png" />
             <h1>Wiokno</h1>
@@ -24,9 +24,10 @@
         <div id="editDiv">
             <button onclick="makeDir()">Make new directory</button>
             <button onclick="makeFile()">Make new file</button>
-            <button onclick="print()">Print</button>
+            <button onclick="printPage()">Print</button>
             <button onclick="sourceEdit()">Edit</button>
         </div>
+        <hr>
     </div>
 
     <div id="navigationDiv" class="content">
@@ -38,8 +39,7 @@
             <li style="margin-left:0%">fff</li>-->
         </ul>
     </div>
-    <br><br><br><br>
-    <hr><br>
+    <br><br><br><br><br><br>
     <div id="d" class="d">
         <div id="md" class="main"></div>
     </div>
@@ -51,6 +51,7 @@
     <script src="/scripts/contentsScript.js"></script>
     <script src="/scripts/makeScript.js"></script>
     <script src="/scripts/editScript.js"></script>
+    <script src="/scripts/printScript.js"></script>
 
     <script>
         let url = new URL(window.location.href);
