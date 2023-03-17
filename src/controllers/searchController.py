@@ -36,7 +36,7 @@ class SearchController(cc):
     def removeDuplicates(str):
         pth = ""
         add = True
-        for i, ch in enumerate(str):
+        for ch in str:
             if (ch == "/" or ch == "\\"):
                 if (add):
                     pth += "/"

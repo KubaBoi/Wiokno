@@ -30,7 +30,7 @@ class CreateController(cc):
         path = ResMan.joinPath(directory, dir_name)
         os.makedirs(path)
 
-        with open(os.path.join(path, "dirConf.md"), "w") as f:
+        with open(os.path.join(path, "dirConf.md"), "w", encoding="utf-8") as f:
             f.write(f"""
 # {dir_name}
             """)
@@ -55,7 +55,7 @@ class CreateController(cc):
         
         path = ResMan.joinPath(directory, file_name + ".md")
 
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write(f"# {file_name}")
 
         return cc.createResponse({"FILE_NAME": ResMan.joinPath(directory, file_name + ".md")})
@@ -95,7 +95,7 @@ class CreateController(cc):
                 "FILE_NAME": "dirConf.md"
             })
 
-        with open(new_file, "w") as f:
+        with open(new_file, "w", encoding="utf-8") as f:
             f.write(args["CONTENT"])
 
         return cc.createResponse({
@@ -125,7 +125,7 @@ class CreateController(cc):
         if (ResMan.getFileName(new_dir) != ResMan.getFileName(dir) and os.path.exists(new_dir)):
             raise Conflict("This directory already exists")
 
-        with open(ResMan.web(file), "w") as f:
+        with open(ResMan.web(file), "w", encoding="utf-8") as f:
             f.write(content)
 
         os.rename(dir, new_dir)
