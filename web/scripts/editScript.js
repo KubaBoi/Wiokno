@@ -75,7 +75,7 @@ async function save() {
         "CONTENT": content
     }
     
-    let response = await callEndpoint("POST", "/create/update", request);
+    let response = await callEndpoint("POST", "create/update", request);
     if (response.ERROR != null) {
         showErrorAlert(response.ERROR, alertTime);
     }
@@ -83,7 +83,7 @@ async function save() {
         dirPath = response.DIR;
         fileName = response.FILE_NAME;
 
-        getMd(`/files/${dirPath}/${fileName}`, false);
+        getMd(`files/${dirPath}/${fileName}`, false);
         getContents(dirPath);
         let resp= await callEndpoint("GET", mdUrl);
         if (resp.ERROR == null) 

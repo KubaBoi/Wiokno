@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -5,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Wiokno</title>
+    <base href="/wiokno/" />
 
-    <link rel="icon" href="/images/icon.png">
+    <link rel="icon" href="images/icon.png">
 
-    <link rel="stylesheet" href="/styles/colors.css">
-    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="styles/colors.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="https://kubaboi.github.io/CheeseFramework/mdConverter/style.css">
     <link rel="stylesheet" href="https://kubaboi.github.io/CheeseFramework/public/styles/alertStyle.css"> 
 </head>
@@ -17,7 +19,7 @@
 <body>
     <div id="headLine" class="headLine">
         <div class="mainHeader">
-            <img src="/images/icon.png" onclick="window.location='/'"/>
+            <img src="images/icon.png" onclick="window.location='/'"/>
             <h1>Wiokno</h1>
         </div>
 
@@ -47,11 +49,11 @@
     <script src="https://kubaboi.github.io/CheeseFramework/public/scripts/cheese.js"></script>
     <script src="https://kubaboi.github.io/CheeseFramework/mdConverter/pack.js"></script>
 
-    <script src="/scripts/variables.js"></script>
-    <script src="/scripts/contentsScript.js"></script>
-    <script src="/scripts/makeScript.js"></script>
-    <script src="/scripts/editScript.js"></script>
-    <script src="/scripts/printScript.js"></script>
+    <script src="scripts/variables.js"></script>
+    <script src="scripts/contentsScript.js"></script>
+    <script src="scripts/makeScript.js"></script>
+    <script src="scripts/editScript.js"></script>
+    <script src="scripts/printScript.js"></script>
 
     <script>
         let url = new URL(window.location.href);
@@ -62,7 +64,7 @@
         var dirPath = url.searchParams.get("d");
         if (dirPath == null) dirPath = "/";
 
-        getMd(`/files/${dirPath}/${fileName}.md`, false);
+        getMd(`files/${dirPath}/${fileName}.md`, false);
 
         getContents();
     </script>

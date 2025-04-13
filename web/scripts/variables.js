@@ -1,2 +1,2 @@
-debug = false;
+debug = true;
 var alertTime = 2000;

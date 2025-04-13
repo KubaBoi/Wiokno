@@ -117,7 +117,7 @@ class CreateController(cc):
                 dir_name = line.replace("# ", "").strip()
                 break
 
-        if (file != "/files/dirConf.md"):
+        if (file != "files/dirConf.md"):
             new_dir = os.path.join(os.path.dirname(dir), dir_name)
         else:
             new_dir = dir
@@ -130,7 +130,7 @@ class CreateController(cc):
 
         os.rename(dir, new_dir)
 
-        if (file != "/files/dirConf.md" and dir_name == "xxxxx"):
+        if (file != "files/dirConf.md" and dir_name == "xxxxx"):
             shutil.rmtree(new_dir)
             new_dir = os.path.dirname(new_dir)
 

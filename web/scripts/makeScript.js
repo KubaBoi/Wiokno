@@ -1,6 +1,6 @@
 
 async function makeDir() {
-    let response = await callEndpoint("GET", `/create/dir?path=${dirPath}`);
+    let response = await callEndpoint("GET", `create/dir?path=${dirPath}`);
     if (response.ERROR == null) {
         getContents();
     }
@@ -14,7 +14,7 @@ async function makeFile() {
         "DIR": dirPath
     }
 
-    let response = await callEndpoint("POST", "/create/file", request);
+    let response = await callEndpoint("POST", "create/file", request);
     if (response.ERROR == null) {
         location.reload();
     }
